@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/bwmarrin/discordgo"
+	_ "github.com/lib/pq"
 )
 
 func InteractionCreate(s *discordgo.Session, i *discordgo.InteractionCreate) {
@@ -29,6 +30,7 @@ func InteractionCreate(s *discordgo.Session, i *discordgo.InteractionCreate) {
 					Content: fmt.Sprintf("The sum is: %d", result),
 				},
 			})
+
 		case "ready":
 			var num1 int64 = 0  // default value if not provided
 			var num2 int64 = 20 // default value if not provided
