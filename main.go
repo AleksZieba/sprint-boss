@@ -41,6 +41,13 @@ func main() {
 	}
 	defer sess.Close()
 
+	for _, cmd := range interactive.Commands {
+		_, err := sess.ApplicationCommandCreate(sess.State.User.ID, "", cmd)
+		if err != nil {
+			log.Printf("Cannot create '%v' command: %v", cmd.Name, err)
+		}
+	}
+
 	fmt.Println("Bot server is online.")
 
 	sc := make(chan os.Signal, 1)

@@ -9,15 +9,15 @@ var Commands = []*discordgo.ApplicationCommand{
 		Options: []*discordgo.ApplicationCommandOption{
 			{
 				Type:        discordgo.ApplicationCommandOptionInteger,
-				Name:        "tillStart",
+				Name:        "startdelay",
 				Description: "number of minutes till the sprint starts",
-				Required:    true,
+				Required:    false,
 			},
 			{
 				Type:        discordgo.ApplicationCommandOptionInteger,
-				Name:        "sprintTime",
+				Name:        "totaltime",
 				Description: "when your sprint starts and how long it is",
-				Required:    true,
+				Required:    false,
 			},
 		},
 	},

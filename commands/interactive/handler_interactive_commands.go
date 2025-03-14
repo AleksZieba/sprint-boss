@@ -9,15 +9,15 @@ import (
 func InteractionCreate(s *discordgo.Session, i *discordgo.InteractionCreate) {
 	if i.Type == discordgo.InteractionApplicationCommand {
 		switch i.ApplicationCommandData().Name {
-		case "add":
+		case "sprint":
 			var num1 int64 = 10 // default value if not provided
 			var num2 int64 = 20 // default value if not provided
 
 			for _, option := range i.ApplicationCommandData().Options {
 				switch option.Name {
-				case "tillStart":
+				case "startdelay":
 					num1 = option.IntValue()
-				case "sprintTime":
+				case "totaltime":
 					num2 = option.IntValue()
 				}
 			}
