@@ -7,6 +7,8 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/AleksZieba/sprint-boss/commands"
+	"github.com/AleksZieba/sprint-boss/commands/interactive"
 	"github.com/bwmarrin/discordgo"
 	"github.com/joho/godotenv"
 )
@@ -19,15 +21,17 @@ func main() {
 		log.Fatal(err)
 	}
 
-	sess.AddHandler(func(s *discordgo.Session, m *discordgo.MessageCreate) {
-		if m.Author.ID == s.State.User.ID {
+	sess.AddHandler(interactive.InteractionCreate)
+	sess.AddHandler(commands.HandlerStartSprint)
+	/*sess.AddHandler(func(s *discordgo.Session, m *discordgo.MessageCreate) {
+		if m.Author.ID == s.State.User.ID || !strings.HasPrefix(m.Content, "/") {
 			return
 		}
 
-		if m.Content == "csprint" {
+		if m.Content == "/sprint" {
 			s.ChannelMessageSend(m.ChannelID, "How many minutes do you want your sprint to last?")
 		}
-	})
+	}) */
 
 	sess.Identify.Intents = discordgo.IntentsAllWithoutPrivileged
 
