@@ -10,10 +10,18 @@ import (
 )
 
 const startSprint = `-- name: StartSprint :exec
-BEGIN
+INSERT INTO users (user_ID, user_name, server_name)
+VALUES ($1 || '\\' || $2, $1, $2)
+ON CONFLICT (user_ID) DO UPDATE
+    SET user_name = EXCLUDED.user_name
 `
 
-func (q *Queries) StartSprint(ctx context.Context) error {
-	_, err := q.db.ExecContext(ctx, startSprint)
+type StartSprintParams struct {
+	UserName   string
+	ServerName string
+}
+
+func (q *Queries) StartSprint(ctx context.Context, arg StartSprintParams) error {
+	_, err := q.db.ExecContext(ctx, startSprint, arg.UserName, arg.ServerName)
 	return err
 }

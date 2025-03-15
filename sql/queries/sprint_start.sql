@@ -1,9 +1,8 @@
 -- name: StartSprint :exec
-BEGIN;
-INSERT INTO users (user_name)
-VALUES ($1)
-ON CONFLICT (user_name) DO NOTHING;
+INSERT INTO users (user_ID, user_name, server_name)
+VALUES ($1 || '\\' || $2, $1, $2)
+ON CONFLICT (user_ID) DO UPDATE
+    SET user_name = EXCLUDED.user_name;
 
 INSERT INTO sprints (user_name, created_at, updated_at) 
-VALUES ($1, now(), now());
-COMMIT;
+VALUES ($1 || '\\' || $2, now(), now());

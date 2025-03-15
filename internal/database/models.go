@@ -10,7 +10,7 @@ import (
 
 type Sprint struct {
 	SprintID  int32
-	UserName  string
+	UserID    string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	WordCount int32
@@ -18,7 +18,8 @@ type Sprint struct {
 }
 
 type User struct {
+	UserID          string
 	UserName        string
-	BossFights      string
+	ServerName      string
 	DifficultyLevel int32
 }

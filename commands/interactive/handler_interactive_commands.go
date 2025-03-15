@@ -55,7 +55,41 @@ func InteractionCreate(s *discordgo.Session, i *discordgo.InteractionCreate) {
 			} else {
 				userName = i.User.Username
 			}
-			err := dbQueries.StartSprint(context.WithValue(context.Background(), "username", userName)) //TODO the query function input
+			ctx := context.WithValue(context.Background(), "username", userName)
+
+			var serverName string
+			if i.GuildID != "" {
+				// This interaction is from a guild.
+				// Try to get the guild from the session state first.
+				guild, err := s.State.Guild(i.GuildID)
+				if err != nil || guild == nil {
+					// If it's not cached, fetch it directly via the API.
+					guild, err = s.Guild(i.GuildID)
+					if err != nil {
+						log.Println("Error fetching guild info:", err)
+						serverName = "Unknown Server"
+					} else {
+						serverName = guild.Name
+					}
+				} else {
+					serverName = guild.Name
+				}
+			} else {
+				// No GuildID means it's a direct message.
+				serverName = "Direct Message"
+			}
+
+			// Now you have the server name in the variable "serverName".
+			fmt.Printf("Command received from: %s\n", serverName)
+
+			// You can now respond or process the command accordingly.
+			queryArg := database.StartSprintParams{
+				UserName:   userName,
+				ServerName: serverName,
+			}
+
+			ctx = context.WithValue(ctx, "servername", serverName)
+			err := dbQueries.StartSprint(ctx, queryArg) //TODO the query function input
 			if err != nil {
 				log.Fatal("Sprint Start Failed") //turn this into a response
 			}
