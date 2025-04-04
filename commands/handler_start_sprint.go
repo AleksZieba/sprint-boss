@@ -1,7 +1,6 @@
 package commands
 
 import (
-	//"log"
 	"strings"
 
 	"github.com/bwmarrin/discordgo"

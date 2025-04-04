@@ -158,7 +158,7 @@ func InteractionCreate(s *discordgo.Session, i *discordgo.InteractionCreate) {
 					log.Println("Failed to turn the sprint on/off") //turn this into a response
 				}
 			}
-			//------ADD A CHECK HERE FOR IF THE SPRINT IS CANCELLED!!!!!-----------------------------------------
+			//TODO: ADD A CHECK HERE FOR IF THE SPRINT IS CANCELLED
 			if sprintDelay > 0 {
 				go func() {
 					time.Sleep(time.Duration(sprintDelay) * time.Minute)
